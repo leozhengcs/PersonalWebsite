@@ -1,2 +1,12 @@
-<h1>Welcome to SvelteKit</h1>
-<p>Visit <a href="https://svelte.dev/docs/kit">svelte.dev/docs/kit</a> to read the documentation</p>
+<script lang='ts'>
+    import Wireframe from "$lib/components/Wireframe.svelte";
+    import NavBar from "$lib/components/NavBar.svelte";
+</script>
+
+<main>
+    <!-- <NavBar /> -->
+    <section class="w-full h-80">
+        <Wireframe/>
+    </section>
+
+</main>
