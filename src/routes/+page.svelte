@@ -4,9 +4,8 @@
 </script>
 
 <main>
-    <!-- <NavBar /> -->
-    <section class="w-full h-80">
-        <Wireframe/>
-    </section>
+
+    <NavBar />
+    <Wireframe/>
 
 </main>

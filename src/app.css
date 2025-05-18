@@ -1,10 +1,19 @@
 @import 'tailwindcss';
 @plugin '@tailwindcss/typography';
 
+@font-face {
+    font-family: Rubik;
+    font-style: normal;
+    src: url("/fonts/Rubik-VariableFont_wght.ttf");
+}
+
 @theme {
     --color-black: #161925;
     --color-blue: #233958;
-    --color-white: #F7F0F5;
-    --color-cream: #DECBB7;
-    --color-gray: #8F857D;
+    --color-white: #FFFFFA;
+    --color-cream: #F7F0F5;
+    --color-gray: #878787;
+    --color-darkBlack: #10121B;
+
+    --font-sans: "Rubik", sans-serif;
 }

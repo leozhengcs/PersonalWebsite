@@ -5,8 +5,8 @@
     const state = $state(navbarState);
 </script>
 
-<nav class={`w-full h-32 ${state.backgroundColor} px-5`}>
-    <div class="h-full">
+<nav class={`w-full h-24 ${state.backgroundColor} px-5 py-2 absolute top-0`}>
+    <div class="h-full flex items-center">
         <Signature stroke="text-white"/>
     </div>
 </nav>
