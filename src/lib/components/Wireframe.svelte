@@ -45,7 +45,7 @@
       if (!vertices.has(key)) {
         vertices.add(key);
         const material = new THREE.MeshBasicMaterial({ color: 0xF7F0F5 });
-        const sphere = new THREE.Mesh(new THREE.SphereGeometry(0.15, 8, 8), material);
+        const sphere = new THREE.Mesh(new THREE.SphereGeometry(0.15, 64, 64), material);
         sphere.position.copy(vertex);
         sphere.userData = { info: `Vertex ${i}` };
         line.add(sphere);
@@ -121,11 +121,11 @@
   });
 </script>
 
-<div class="h-[100vh] flex justify-center items-center bg-black">
-  <div bind:this={container} class="w-[30vw] h-[50vh]"></div>
+<div class="h-[100vh] flex justify-center items-center bg-primary">
+  <div bind:this={container} class="lg:w-[600px] lg:h-[600px]"></div>
   <!-- Desktop Tooltip -->
-  <div bind:this={desktopDisplayTT} id="desktop-display" class="opacity-0 absolute right-40 w-fit min-w-80 bg-gray rounded-lg p-10 text-white transition-all duration-300 translate-x-10 ease-in-out">
-    <h1 class="text-white font-bold text-xl opacity-100">Fun Fact</h1>
+  <div bind:this={desktopDisplayTT} id="desktop-display" class="opacity-0 absolute right-40 w-fit min-w-80 bg-gray rounded-lg p-10 text-secondary transition-all duration-300 translate-x-10 ease-in-out">
+    <h1 class="text-secondary font-bold text-xl opacity-100">Fun Fact</h1>
     <span>Peter</span>
   </div>
   <!-- Mobile Tooltip -->

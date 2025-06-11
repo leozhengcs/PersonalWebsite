@@ -8,12 +8,33 @@
 }
 
 @theme {
-    --color-black: #161925;
-    --color-blue: #233958;
-    --color-white: #FFFFFA;
-    --color-cream: #F7F0F5;
-    --color-gray: #878787;
-    --color-darkBlack: #10121B;
+  --color-primary: #161925;
+  --color-blue: #233958;
+  --color-secondary: #FFFFFA;
+  --color-cream: #F7F0F5;
+  --color-gray: #878787;
+  --color-darkBlack: #10121B;
 
-    --font-sans: "Rubik", sans-serif;
+  --font-sans: "Rubik", sans-serif;
+
+  --animate-grow-from-center: grow-from-center 0.3s ease-out;
+  --animate-shrink-to-center: shrink-to-center 0.3s ease-in-out forwards;
+  
+  @keyframes grow-from-center {
+    0% {
+      transform: scaleY(0);
+    }
+    100% {
+      transform: scaleY(1);
+    }
+  }
+
+  @keyframes shrink-to-center {
+    0% {
+      transform: scaleY(1);
+    }
+    100% {
+      transform: scaleY(0);
+    }
+  }
 }

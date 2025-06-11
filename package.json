@@ -33,6 +33,8 @@
 		"cookie": "^0.7.0"
 	},
 	"dependencies": {
+		"@supabase/supabase-js": "^2.50.0",
+		"svelte-hamburgers": "^5.0.0",
 		"svelte-sonner": "^0.3.28",
 		"three": "^0.175.0"
 	}

@@ -1,0 +1,2 @@
+<!-- <a target="_blank" href="https://icons8.com/icon/60977/downloading-updates">App</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a> -->
+<footer class='w-full text-secondary'>© Leo Zheng 2025</footer>

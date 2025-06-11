@@ -1,3 +1,3 @@
 export const navbarState = $state({
-    backgroundColor: "bg-black"
+    backgroundColor: "bg-primary"
 });
