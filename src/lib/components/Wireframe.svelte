@@ -2,6 +2,10 @@
   import { onMount } from 'svelte';
   import * as THREE from 'three';
   import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
+  import { CategoryColors } from '$lib/types/WireframeTypes';
+  import type { FunFact } from '$lib/types/WireframeTypes';
+
+  let { funFacts }: { funFacts: FunFact[] } = $props();
 
   let container: HTMLDivElement;
   let desktopDisplayTT: HTMLDivElement;
@@ -34,22 +38,50 @@
     const line = new THREE.LineSegments(edges, new THREE.LineBasicMaterial({ color: 0xF7F0F5 }));
     scene.add(line);
 
-    const vertexNodes: THREE.Mesh[] = [];
+    const group = new THREE.Group();
+    scene.add(group);
 
+    const vertexNodes: THREE.Mesh[] = [];
     const positionAttr = geometry.getAttribute('position');
     const vertices = new Set<string>();
 
-    for (let i = 0; i < positionAttr.count; i++) {
+    // Sort funFacts by category (you can customize the sort logic if needed)
+    const sortedFacts = [...funFacts].sort((a, b) => {
+      if (a.category < b.category) return -1;
+      if (a.category > b.category) return 1;
+      return 0;
+    });
+
+    let factIndex = 0;
+
+    for (let i = 0; i < positionAttr.count && factIndex < sortedFacts.length; i++) {
       const vertex = new THREE.Vector3().fromBufferAttribute(positionAttr, i);
       const key = `${vertex.x.toFixed(4)},${vertex.y.toFixed(4)},${vertex.z.toFixed(4)}`;
+
       if (!vertices.has(key)) {
         vertices.add(key);
-        const material = new THREE.MeshBasicMaterial({ color: 0xF7F0F5 });
-        const sphere = new THREE.Mesh(new THREE.SphereGeometry(0.15, 64, 64), material);
+
+        const fact = sortedFacts[factIndex];
+        const color = CategoryColors[fact.category] || 0x5B5B5B;
+
+        const sphereMaterial = new THREE.MeshBasicMaterial({ color });
+        const sphere = new THREE.Mesh(
+          new THREE.SphereGeometry(0.15, 64, 64),
+          sphereMaterial
+        );
+
         sphere.position.copy(vertex);
-        sphere.userData = { info: `Vertex ${i}` };
-        line.add(sphere);
+        sphere.userData = {
+          title: fact.title,
+          description: fact.description,
+          category: fact.category,
+          color,
+        };
+
+        line.add(sphere); // add sphere to the rotating wireframe
         vertexNodes.push(sphere);
+
+        factIndex++;
       }
     }
 
@@ -71,7 +103,8 @@
 
       // reset all colors
       vertexNodes.forEach((v) => {
-        (v.material as THREE.MeshBasicMaterial).color.set(0xF7F0F5);
+        const defaultColor = (v.userData.color as number) || 0x5B5B5B;
+        (v.material as THREE.MeshBasicMaterial).color.set(defaultColor);
       });
 
       raycaster.setFromCamera(mouse, camera);
@@ -79,10 +112,16 @@
 
       if (intersects.length > 0) {
         const clicked = intersects[0].object as THREE.Mesh;
+        const { description, title, category } = clicked.userData;
+
         // Highlight the clicked vertex
-        (clicked.material as THREE.MeshBasicMaterial).color.set(0x233958);
+        (clicked.material as THREE.MeshBasicMaterial).color.set(0xF7F0F5);
 
         // Show the tooltip
+        desktopDisplayTT.querySelector('span')!.textContent = title;
+        desktopDisplayTT.querySelector('small')!.textContent = category;
+        desktopDisplayTT.querySelector('p')!.textContent = description;
+
         desktopDisplayTT.classList.add('lg:opacity-100');
         desktopDisplayTT.classList.remove('translate-x-10');
       } else {
@@ -124,9 +163,10 @@
 <div class="h-[100vh] flex justify-center items-center bg-primary">
   <div bind:this={container} class="lg:w-[600px] lg:h-[600px]"></div>
   <!-- Desktop Tooltip -->
-  <div bind:this={desktopDisplayTT} id="desktop-display" class="opacity-0 absolute right-40 w-fit min-w-80 bg-gray rounded-lg p-10 text-secondary transition-all duration-300 translate-x-10 ease-in-out">
-    <h1 class="text-secondary font-bold text-xl opacity-100">Fun Fact</h1>
-    <span>Peter</span>
+  <div bind:this={desktopDisplayTT} id="desktop-display" class="opacity-0 absolute flex flex-col gap-3 right-40 w-fit max-w-80 bg-gray/20 rounded-lg p-10 text-secondary text-lg transition-all duration-300 translate-x-10 ease-in-out">
+    <span></span>
+    <small></small>
+    <p></p>
   </div>
   <!-- Mobile Tooltip -->
 </div>

@@ -1,3 +1,5 @@
+import { supabase } from "$lib/supabaseClient"
+
 interface Project {
     created_at: Date,
     description: string,
@@ -35,4 +37,30 @@ export const getUniqueTechs = (projects: Project[]) => {
         techs = techs.concat(project.tech_stack)
     });
     return new Set(techs).values();
+}
+
+export const listAllFiles = async (path = ''): Promise<string[]> => {
+  const { data, error } = await supabase.storage.from('projects').list(path);
+
+  if (error) {
+    console.error(`Error listing path "${path}":`, error.message);
+    return [];
+  }
+
+  let files: string[] = [];
+
+  for (const item of data) {
+    if (item.name) {
+      const isFolder = item.id === null || item.metadata === null;
+
+      if (isFolder) {
+        const nestedFiles = await listAllFiles(`${path}${item.name}/`);
+        files = files.concat(nestedFiles);
+      } else {
+        files.push(`${path}${item.name}`);
+      }
+    }
+  }
+
+  return files;
 }

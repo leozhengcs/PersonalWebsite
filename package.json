@@ -34,6 +34,8 @@
 	},
 	"dependencies": {
 		"@supabase/supabase-js": "^2.50.0",
+		"embla-carousel-autoplay": "^8.6.0",
+		"embla-carousel-svelte": "^8.6.0",
 		"svelte-hamburgers": "^5.0.0",
 		"svelte-sonner": "^0.3.28",
 		"three": "^0.175.0"

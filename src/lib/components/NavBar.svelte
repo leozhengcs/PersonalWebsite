@@ -2,10 +2,9 @@
     import { navbarState } from "$lib/stores/navbar.svelte";
     import Signature from "$lib/assets/signature.svelte";
     import { Hamburger } from "svelte-hamburgers";
-    import { fade, fly, scale, slide } from "svelte/transition";
+    import { fade, fly } from "svelte/transition";
     import { scaleY } from "$lib/transitions/scaleY";
-    import { backIn, backInOut } from "svelte/easing";
-	import { tick } from "svelte";
+    import { backInOut } from "svelte/easing";
     import Tooltip from "./Tooltip.svelte";
 
     let navState = $state(navbarState);
@@ -67,10 +66,12 @@
                 <p in:fly={{ duration: 600, delay: 100, x: 100, easing: backInOut}} class='text-secondary'>
                     When designing this website, I wanted to achieve a <i>bouncy</i> feeling that makes navigating the site feel smooth and seamless.
                     During planning, I wanted the website to showcase not only my technical skills but also make it fun for the user to interact with.
-                    I chose the spinning globe thing to be the first thing you see upon visiting the site simply because I thought it was cool. But also because
-                    of the fact that it naturally makes you want to interact with it. Though I do a lot of web development stuff, I am also very interested in AI and ML.
-                    Hence, is why I also have a blog page where I will be uploading my latest findings and experiences regarding AI/ML and my latest projects on Kaggle
-                    and other data science platforms.
+                    I chose the spinning globe wireframe to be the first thing you see because I thought it was cool. But more importantly, because
+                    it gives off that 'techy' vibe and also naturally makes you want to interact with it. Something new that I tried was incorporation 
+                    Svelte's built in transitions (this site was built using Svelte and SvelteKit <Tooltip text='BTW = By The Way'>BTW</Tooltip>) 
+                    to achieve most of the effects that you see in the site. It took a lot of playing around before I was able to finally settle on
+                    an effect, but in the end I was happy with what I achieved. The hardest part surprisingly was not the globe
+                    but the small things like the custom tooltip, or the getting the effects in sync with the DOM so they would be animated properly.
                 </p>
             </section>
         </div>
@@ -94,8 +95,7 @@
             </a>
         </div>
         <div class="z-50">
-            <Hamburger bind:open --color="#FFFFFA" --padding='0' --z-index='50'/>
+            <Hamburger bind:open title='Navigation' --color="#FFFFFA" --padding='0' --z-index='50'/>
         </div>
-        <!-- <button onclick={toggleNest} class='text-secondary hover:cursor-pointer'>Update</button> -->
     </div>
 </nav>
