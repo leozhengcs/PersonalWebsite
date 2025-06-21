@@ -31,7 +31,6 @@
     // const years = getUniqueYears(data.data);
     // const techs = getUniqueTechs(data.data);
 
-    $inspect(data);
     // console.log(data.data);
     // console.log(data.grouped[data.data[1].name.replace(" ", "").toLowerCase()]);
 </script>
@@ -93,7 +92,8 @@
                         {/each}
                     </div>
                 </div> -->
-                <EmblaCarousel images={data.grouped[project.name.replace(" ", "").toLowerCase()]}/>
+                { console.log(project.name.replace(" ", "").toLowerCase()) }
+                <EmblaCarousel images={data.grouped[project.name.replace(/\s+/g, "").toLowerCase()]}/>
                 <div class='flex w-full justify-end gap-5'>
                     <button 
                         class='p-2 w-fit bg-blue rounded-lg hover:bg-cream/50 transition-colors duration:600 hover:cursor-pointer'
